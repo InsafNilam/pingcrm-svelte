@@ -1,6 +1,5 @@
 import '../css/app.css'
 import { createInertiaApp } from '@inertiajs/svelte'
-import { hydrate, mount } from 'svelte'
 
 createInertiaApp({
   resolve: (name) => {
@@ -8,11 +7,6 @@ createInertiaApp({
     return pages[`./Pages/${name}.svelte`]
   },
   setup({ el, App, props }) {
-    mount(App, { target: el, props })
-    if (el.dataset.serverRendered === 'true') {
-      hydrate(App, { target: el, props })
-    } else {
-      mount(App, { target: el, props })
-    }
+    new App({ target: el, props, hydrate: true })
   },
 })
